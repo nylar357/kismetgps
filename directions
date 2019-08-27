@@ -1,0 +1,73 @@
+
+
+    EH SecurityViacom Left Delicate Information And Secret Key on Unsecured Amazon Server
+    EH SecurityCareem Cyber Attack Resulted in Loss of 14 Million Customer Details
+    EH SecurityBiggest Social Media Network Lost User’s Trust
+    Data securityNearly Half Million Norway's Citizen Healthcare Data Exposed in a Breach
+    CyberwarPentagon Considers Atomic Reaction to Strike Back for Huge Cyber Attack
+    EH SecurityOnePlus Site’s Payment System Hacked: Credit Card Detail Compromised
+    EH SecuritySecurity Breach at Forever 21 Exposed Customer Credit Card Details
+    EH Security6 Russian Government Officials Involved in DNC Hack
+    EH SecurityDUHK Attack Letting Hackers to Recover Encryption Key: Dont Use Hard Coded Keys
+    EH SecurityWi-Fi security flaw: WPA2 Key Reinstallation Attack KRACK
+
+Home GPS Kali Linux Kismet Tutorial wardriving Kismet with GPS in Kali Linux Tutorial
+Kismet with GPS in Kali Linux Tutorial
+Ethical Hacking 5 years ago GPS, Kali Linux, Kismet, Tutorial, wardriving
+I recently ran into a situation where I needed to use Kismet with GPS support.  This was extremely difficult to accomplish, not because the installation is difficult (its actually fairly simple when you know the steps) but because there was absolutely NO decent documentation on this. Hopefully this will change that.
+
+What You Need?
+
+This header for this section should perhaps be “What I Used.”  Because I’ve only tested my only hardware, its the only thing I can say for certain will work.  I used the ALFA AWUS036NH external wireless adapter, found here:
+
+http://www.amazon.com/gp/product/B003YIFHJY?ref_=pe_527950_33920250
+
+
+
+
+
+
+
+And I used the GlobalSat ND-100S USB GPS Dongle, found here:
+http://www.amazon.com/dp/B003WNHGAO/ref=pe_385040_30332190_TE_dp_1
+
+
+How to Install in Kali???
+First we need to install a few packages in Kali Linux to get this thing to work.  First, the GPS daemon.
+
+# sudo apt-get install gpsd
+
+
+
+
+Then GPSd-clients package:
+
+# sudo apt-get install gpsd-clients
+
+Now, you can plug in your hardware.  If you are using a VM, make sure you pass it across.  You can verify that the GPS dongle is there by using the following command:
+
+# lsusb
+
+Then verify that your wireless adapter is there, and get the interface name.
+# ifconfig
+
+Next, make sure that your GPS adapter is showing up in the /dev/ directory.  To do this, use the command:
+
+# ls /dev/gps*
+
+This should also help you identify the name.  Once you have identified the path in /dev/, pass that as an argument to gpsd.
+
+# gpsd /dev/gps[x]
+
+
+Did it Work???
+To verify that this worked, we obviously want to boot up Kismet.  Kinda the point…right?  Once Kismet has been booted, use the backtick/accent button ( ` ) to access the Kismet menu at the top.  Scroll right to the Windows menu, then select “GPS Details.”
+
+
+
+Assuming you have signal, you should see the number of satellites connected and the signal strength corresponding to each.  In the example provided below, I have signal from 4 different satellites.  Alternatively, you may see a message indicating that you have no satellite signal.  If this is the case…keep walking/driving around.  It’ll happen.  Otherwise, if you are receiving a message that says no GPS device is connected, time to scrub the whole process and start over again.
+
+
+
+Finally, you can verify that GPS data is being written to the output by examining the contents.  In the .nettxt file below, you can see that their are coordinate values for minimum position, maximum position and peak position.
+
